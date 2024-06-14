@@ -203,7 +203,7 @@ public partial class ArcheryDbContext : DbContext
 
         var personFaker = new Faker<Person>("pl")
             .RuleFor(p => p.PESEL, f => f.Random.String2(11, "0123456789"))
-            .RuleFor(p => p.Names, f => f.Name.FirstName())
+            .RuleFor(p => p.Names, f => $"{f.Name.FirstName()}, {f.Name.FirstName()}")
             .RuleFor(p => p.Surname, f => f.Name.LastName())
             .RuleFor(p => p.DateOfBirth, f => f.Date.Past(20, DateTime.Now))
             .RuleFor(p => p.Bow_NickName, f =>
@@ -215,7 +215,25 @@ public partial class ArcheryDbContext : DbContext
         var people = personFaker.Generate(numOfData);
         modelBuilder.Entity<Person>().HasData(people);
 
+
         var personArchersIndexes = new List<int> { 0, 1, 2, 3, 4 };
+        var arrowStates = new List<string> { "New", "Used", "Broken" };
+        var arrowSetFaker = new Faker<ArrowSet>()
+            .RuleFor(a => a.ID, f => f.Random.Int(1, 100))
+            .RuleFor(a => a.Person_PESEL, f =>
+            {
+                var pickedPersonIndex = f.PickRandom(personArchersIndexes);
+                personArchersIndexes.Remove(pickedPersonIndex);
+                return people[pickedPersonIndex].PESEL;
+            })
+            .RuleFor(a => a.State, f => f.PickRandom(arrowStates))
+            .RuleFor(a => a.ArrowLength, f => f.Random.Double(20, 40))
+            .RuleFor(a => a.ArrowQuantity, f => f.Random.Int(6, 15));
+        var arrowSets = arrowSetFaker.Generate(personArchersIndexes.Count);
+        modelBuilder.Entity<ArrowSet>().HasData(arrowSets);
+
+
+        personArchersIndexes = [0, 1, 2, 3, 4];
         var archerFaker = new Faker<Archer>()
             .RuleFor(a => a.Rank, f => f.PickRandom("Junior", "Cadet", "Senior"))
             .RuleFor(a => a.Person_PESEL, f =>
@@ -223,15 +241,14 @@ public partial class ArcheryDbContext : DbContext
                 var pickedPersonIndex = f.PickRandom(personArchersIndexes);
                 personArchersIndexes.Remove(pickedPersonIndex);
                 return people[pickedPersonIndex].PESEL;
+            })
+            .RuleFor(a => a.Person_PESELNavigation.ArrowSet_ID, f =>
+            {
+                var pickedArrowSet = f.PickRandom(arrowSets);
+                arrowSets.Remove(pickedArrowSet);
+                return pickedArrowSet.ID;
             });
-        var archers = archerFaker.Generate(numOfData / 2);
+        var archers = archerFaker.Generate(personArchersIndexes.Count);
         modelBuilder.Entity<Archer>().HasData(archers);
-
-        // var arrowSetFaker = new Faker<ArrowSet>()
-        //     .RuleFor(a => a.ID, f => f.Random.Int(1, 100))
-        //     .RuleFor(a => a.Person_PESEL, f => people[f.Random.Int(0, numOfData - 1)].PESEL);
-        // var arrowSets = arrowSetFaker.Generate(numOfData);
-
-        // modelBuilder.Entity<ArrowSet>().HasData(arrowSets);
     }
 }

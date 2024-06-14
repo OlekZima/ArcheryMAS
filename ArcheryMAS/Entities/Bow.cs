@@ -9,18 +9,7 @@ namespace ArcheryMAS.Entities;
 [Table("Bow")]
 public partial class Bow
 {
-    [Key]
-    public string NickName
-    {
-        get => NickName;
-        set
-        {
-            if (value.Length >= 30)
-            {
-                throw new Exception("NickName is too long");
-            }
-        }
-    }
+    [Key] public string NickName { get; set; } = null!;
 
     public string Manufacturer { get; set; } = null!;
 

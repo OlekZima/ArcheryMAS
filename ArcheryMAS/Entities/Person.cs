@@ -36,4 +36,9 @@ public partial class Person
 
     [InverseProperty("Person_PESELNavigation")]
     public virtual President? President { get; set; }
+
+    public List<string> GetNamesList()
+    {
+        return Names.Split(", ").ToList();
+    }
 }
