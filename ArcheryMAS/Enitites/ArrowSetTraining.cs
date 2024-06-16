@@ -11,8 +11,7 @@ public partial class ArrowSetTraining
 {
     public string Material { get; set; } = null!;
 
-    [Key]
-    public int ArrowSet_ID { get; set; }
+    [Key] public int ArrowSet_ID { get; set; }
 
     [ForeignKey("ArrowSet_ID")]
     [InverseProperty("ArrowSetTraining")]

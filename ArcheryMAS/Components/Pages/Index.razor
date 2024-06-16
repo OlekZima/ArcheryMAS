@@ -1,0 +1,97 @@
+@page "/"
+@using ArcheryMAS.Migrations
+@using ArcheryMAS.Service
+
+@rendermode InteractiveServer
+@inject PresidentService PresidentService
+
+<style>
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+    }
+
+    .header {
+        align-self: flex-start;
+        padding: 20px;
+        font-size: 16px;
+    }
+
+    .title {
+        margin: 20px 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .button {
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .button:hover {
+        background-color: #367c39;
+    }
+
+</style>
+
+
+@code {
+    private President president;
+    string presidentFullName;
+    // string PresidentName = "Jan Kowalski"; // Możesz to usunąć, jeśli nie jest używane
+
+    protected override async Task OnInitializedAsync()
+    {
+        president = await PresidentService.GetPresidentsAsync();
+        if (president != null && president.Person_PESELNavigation != null)
+        {
+            presidentFullName = $"{president.Person_PESELNavigation.FullName} {president.Person_PESELNavigation.Surname}";
+        }
+        else
+        {
+            presidentFullName = "";
+
+
+        }
+    }
+
+}
+
+
+    <PageTitle>LKS Łucznik Żywiec</PageTitle>
+
+<div class="page-container">
+    <div class="president">
+        Witaj, @presidentFullName!
+    </div>
+
+    <div class="title">
+        <h2>LKS ŁUCZNIK ŻYWIEC</h2>
+    </div>
+
+    <div class="buttons">
+        <button class="button">Dodaj zawody</button>
+        <button class="button">Dodaj zawodnika</button>
+        <button class="button">Edytuj zawodnika</button>
+        <button class="button">Edytuj sprzęt</button>
+    </div>
+</div>
+
+@code {
+    string PresidentName = "Jan Kowalski";
+}

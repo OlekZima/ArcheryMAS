@@ -9,8 +9,7 @@ namespace ArcheryMAS.Migrations;
 [Table("ArrowSet")]
 public partial class ArrowSet
 {
-    [Key]
-    public int ID { get; set; }
+    [Key] public int ID { get; set; }
 
     public int MinQuantity { get; set; }
 
@@ -18,18 +17,13 @@ public partial class ArrowSet
 
     public string State { get; set; } = null!;
 
-    [Column(TypeName = "double")]
-    public double ArrowLength { get; set; }
+    [Column(TypeName = "double")] public double ArrowLength { get; set; }
 
-    [InverseProperty("ArrowSet")]
-    public virtual ArrowSetIndoor? ArrowSetIndoor { get; set; }
+    [InverseProperty("ArrowSet")] public virtual ArrowSetIndoor? ArrowSetIndoor { get; set; }
 
-    [InverseProperty("ArrowSet")]
-    public virtual ArrowSetOutdoor? ArrowSetOutdoor { get; set; }
+    [InverseProperty("ArrowSet")] public virtual ArrowSetOutdoor? ArrowSetOutdoor { get; set; }
 
-    [InverseProperty("ArrowSet")]
-    public virtual ArrowSetTraining? ArrowSetTraining { get; set; }
+    [InverseProperty("ArrowSet")] public virtual ArrowSetTraining? ArrowSetTraining { get; set; }
 
-    [InverseProperty("ArrowSet")]
-    public virtual ICollection<Person> People { get; set; } = new List<Person>();
+    [InverseProperty("ArrowSet")] public virtual ICollection<Person> People { get; set; } = new List<Person>();
 }

@@ -11,14 +11,11 @@ public partial class ArrowSetOutdoor
 {
     public string Material { get; set; } = null!;
 
-    [Column(TypeName = "double")]
-    public double MaxDiameter { get; set; }
+    [Column(TypeName = "double")] public double MaxDiameter { get; set; }
 
-    [Column(TypeName = "double")]
-    public double Diameter { get; set; }
+    [Column(TypeName = "double")] public double Diameter { get; set; }
 
-    [Key]
-    public int ArrowSet_ID { get; set; }
+    [Key] public int ArrowSet_ID { get; set; }
 
     [ForeignKey("ArrowSet_ID")]
     [InverseProperty("ArrowSetOutdoor")]

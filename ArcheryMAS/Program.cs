@@ -1,11 +1,17 @@
 using ArcheryMAS.Components;
+using ArcheryMAS.Context;
+using ArcheryMAS.Service;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddScoped<PresidentService>();
 
+builder.Services.AddDbContext<ArcheryDbContext>(options =>
+    options.UseSqlite("Data Source=ArcheryDb.sqlite"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

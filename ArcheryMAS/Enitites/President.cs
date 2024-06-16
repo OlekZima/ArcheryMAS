@@ -9,8 +9,7 @@ namespace ArcheryMAS.Migrations;
 [Table("President")]
 public partial class President
 {
-    [Key]
-    public string Person_PESEL { get; set; } = null!;
+    [Key] public string Person_PESEL { get; set; } = null!;
 
     public string DegreeOfEducation { get; set; } = null!;
 

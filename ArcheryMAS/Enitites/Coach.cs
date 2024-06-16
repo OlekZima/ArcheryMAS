@@ -9,8 +9,7 @@ namespace ArcheryMAS.Migrations;
 [Table("Coach")]
 public partial class Coach
 {
-    [Key]
-    public string Person_PESEL { get; set; } = null!;
+    [Key] public string Person_PESEL { get; set; } = null!;
 
     public int MinSalary { get; set; }
 

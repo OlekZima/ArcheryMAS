@@ -9,8 +9,7 @@ namespace ArcheryMAS.Migrations;
 [Table("Person")]
 public partial class Person
 {
-    [Key]
-    public string PESEL { get; set; } = null!;
+    [Key] public string PESEL { get; set; } = null!;
 
     public string Bow_NickName { get; set; } = null!;
 
@@ -18,8 +17,7 @@ public partial class Person
 
     public string Surname { get; set; } = null!;
 
-    [Column(TypeName = "date")]
-    public DateTime DateOfBirth { get; set; }
+    [Column(TypeName = "date")] public DateTime DateOfBirth { get; set; }
 
     public string Names { get; set; } = null!;
 
@@ -39,4 +37,6 @@ public partial class Person
 
     [InverseProperty("Person_PESELNavigation")]
     public virtual President? President { get; set; }
+
+    public string FullName => $"{Names} {Surname}";
 }

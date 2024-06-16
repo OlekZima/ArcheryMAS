@@ -9,8 +9,7 @@ namespace ArcheryMAS.Migrations;
 [Table("OlympicBow")]
 public partial class OlympicBow
 {
-    [Key]
-    public string Bow_NickName { get; set; } = null!;
+    [Key] public string Bow_NickName { get; set; } = null!;
 
     public int NummberOfStabilizers { get; set; }
 

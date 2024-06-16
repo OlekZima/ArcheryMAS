@@ -43,34 +43,34 @@ public partial class ArcheryDbContext : DbContext
 
     public virtual DbSet<Person> People { get; set; }
 
-    public virtual DbSet<President> Presidents { get; set; }
+    public virtual DbSet<President?> Presidents { get; set; }
 
     public virtual DbSet<Training> Training { get; set; }
 
     public virtual DbSet<UniversalSet> UniversalSets { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlite("Data Source=F:\\MAS_CS\\ArcheryMAS\\ArcheryMAS\\ArcherDb.sqlite");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Archer>(entity =>
         {
-            entity.HasOne(d => d.Person_PESELNavigation).WithOne(p => p.Archer).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Person_PESELNavigation).WithOne(p => p.Archer)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<ArcherInCompetition>(entity =>
         {
-            entity.HasOne(d => d.Archer_Person_PESELNavigation).WithMany(p => p.ArcherInCompetitions).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Archer_Person_PESELNavigation).WithMany(p => p.ArcherInCompetitions)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
-            entity.HasOne(d => d.Competition_NameNavigation).WithMany(p => p.ArcherInCompetitions).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Competition_NameNavigation).WithMany(p => p.ArcherInCompetitions)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
-        modelBuilder.Entity<ArrowSet>(entity =>
-        {
-            entity.Property(e => e.ID).ValueGeneratedNever();
-        });
+        modelBuilder.Entity<ArrowSet>(entity => { entity.Property(e => e.ID).ValueGeneratedNever(); });
 
         modelBuilder.Entity<ArrowSetIndoor>(entity =>
         {
@@ -95,17 +95,20 @@ public partial class ArcheryDbContext : DbContext
 
         modelBuilder.Entity<Coach>(entity =>
         {
-            entity.HasOne(d => d.Person_PESELNavigation).WithOne(p => p.Coach).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Person_PESELNavigation).WithOne(p => p.Coach)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<CompoundBow>(entity =>
         {
-            entity.HasOne(d => d.Bow_NickNameNavigation).WithOne(p => p.CompoundBow).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Bow_NickNameNavigation).WithOne(p => p.CompoundBow)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<OlympicBow>(entity =>
         {
-            entity.HasOne(d => d.Bow_NickNameNavigation).WithOne(p => p.OlympicBow).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Bow_NickNameNavigation).WithOne(p => p.OlympicBow)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Person>(entity =>
@@ -117,23 +120,29 @@ public partial class ArcheryDbContext : DbContext
 
         modelBuilder.Entity<President>(entity =>
         {
-            entity.HasOne(d => d.Person_PESELNavigation).WithOne(p => p.President).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Person_PESELNavigation).WithOne(p => p.President)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Training>(entity =>
         {
-            entity.HasOne(d => d.Archer_Person_PESELNavigation).WithMany(p => p.Training).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Archer_Person_PESELNavigation).WithMany(p => p.Training)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
-            entity.HasOne(d => d.Coach_Person_PESELNavigation).WithMany(p => p.Training).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.Coach_Person_PESELNavigation).WithMany(p => p.Training)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<UniversalSet>(entity =>
         {
-            entity.HasOne(d => d.ArrowSetIndoor_ArrowSet).WithMany(p => p.UniversalSets).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.ArrowSetIndoor_ArrowSet).WithMany(p => p.UniversalSets)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
-            entity.HasOne(d => d.ArrowSetOutdoor_ArrowSet).WithMany(p => p.UniversalSets).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.ArrowSetOutdoor_ArrowSet).WithMany(p => p.UniversalSets)
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
-            entity.HasOne(d => d.ArrowSetTraining_ArrowSet).WithMany(p => p.UniversalSets).OnDelete(DeleteBehavior.ClientSetNull);
+            entity.HasOne(d => d.ArrowSetTraining_ArrowSet).WithMany(p => p.UniversalSets)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);
@@ -166,7 +175,7 @@ public partial class ArcheryDbContext : DbContext
             });
         var bows = bowFaker.Generate(numOfData);
         modelBuilder.Entity<Bow>().HasData(bows);
-        
+
         var arrowSetFaker = new Faker<ArrowSet>()
             .RuleFor(a => a.ArrowQuantity, f => f.Random.Int(6, 12))
             .RuleFor(a => a.ArrowLength, f => f.Random.Double(20, 40))
@@ -196,11 +205,11 @@ public partial class ArcheryDbContext : DbContext
                 arrowSets.Remove(picked);
                 return picked.ID;
             });
-        
+
         var people = personFaker.Generate(numOfData);
         modelBuilder.Entity<Person>().HasData(people);
 
-        
+
         var archerFaker = new Faker<Archer>()
             .RuleFor(a => a.Person_PESEL, f =>
             {
@@ -209,9 +218,48 @@ public partial class ArcheryDbContext : DbContext
                 return pickedPerson.PESEL;
             })
             .RuleFor(a => a.Rank, f => f.PickRandom("Junior", "Cadet", "Senior"));
-        
+
         var archers = archerFaker.Generate(5);
         modelBuilder.Entity<Archer>().HasData(archers);
+
+        var coachFake = new Faker<Coach>()
+            .RuleFor(c => c.Person_PESEL, f =>
+            {
+                var pickedPerson = f.PickRandom(people);
+                people.Remove(pickedPerson);
+                return pickedPerson.PESEL;
+            })
+            // .RuleFor(c=> c.MinSalary, 5000)
+            .RuleFor(c => c.Bonus, f => f.Random.Int(100, 1000));
+        var coaches = coachFake.Generate(4);
+        modelBuilder.Entity<Coach>().HasData(coaches);
+
+
+        // var bowPresident = new Bow()
+        // {
+        //     NickName = "2137",
+        //     Manufacturer = "Hoyt",
+        //     Force = 50
+        // };
+        // modelBuilder.Entity<Bow>().HasData(bowPresident);
+        //
+        // var personPresident = new Person()
+        // {
+        //     PESEL = "11111111111",
+        //     Names = "Janusz",
+        //     Surname = "Prezes",
+        //     DateOfBirth = new DateTime(1970, 1, 1),
+        //     Bow_NickName = bowPresident.NickName,
+        // };
+        // modelBuilder.Entity<Person>().HasData(personPresident);
+        //
+        // var president = new President()
+        // {
+        //     Person_PESEL = personPresident.PESEL,
+        //     DegreeOfEducation = "Master",
+        // };
+        // personPresident.President = president;
+        // modelBuilder.Entity<President>().HasData(president);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

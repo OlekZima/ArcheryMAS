@@ -36,27 +36,27 @@ namespace ArcheryMAS.Migrations
                     b.HasData(
                         new
                         {
-                            Person_PESEL = "19912380255",
-                            Rank = "Cadet"
+                            Person_PESEL = "81749421112",
+                            Rank = "Senior"
                         },
                         new
                         {
-                            Person_PESEL = "24819451900",
-                            Rank = "Junior"
+                            Person_PESEL = "84604994968",
+                            Rank = "Senior"
                         },
                         new
                         {
-                            Person_PESEL = "01031833697",
-                            Rank = "Junior"
+                            Person_PESEL = "62521228462",
+                            Rank = "Senior"
                         },
                         new
                         {
-                            Person_PESEL = "55655467444",
-                            Rank = "Junior"
+                            Person_PESEL = "40509350330",
+                            Rank = "Senior"
                         },
                         new
                         {
-                            Person_PESEL = "13355429133",
+                            Person_PESEL = "13059870195",
                             Rank = "Cadet"
                         });
                 });
@@ -111,83 +111,83 @@ namespace ArcheryMAS.Migrations
                     b.HasData(
                         new
                         {
-                            ID = 45,
-                            ArrowLength = 38.672065074396997,
-                            ArrowQuantity = 7,
+                            ID = 49,
+                            ArrowLength = 34.53629683160981,
+                            ArrowQuantity = 8,
                             MinQuantity = 0,
-                            State = "Used"
+                            State = "Broken"
                         },
                         new
                         {
-                            ID = 46,
-                            ArrowLength = 38.430618901890568,
+                            ID = 50,
+                            ArrowLength = 23.806805523961678,
                             ArrowQuantity = 11,
                             MinQuantity = 0,
                             State = "New"
                         },
                         new
                         {
-                            ID = 47,
-                            ArrowLength = 28.119056535633117,
-                            ArrowQuantity = 6,
-                            MinQuantity = 0,
-                            State = "New"
-                        },
-                        new
-                        {
-                            ID = 48,
-                            ArrowLength = 37.666080501760518,
-                            ArrowQuantity = 8,
-                            MinQuantity = 0,
-                            State = "Used"
-                        },
-                        new
-                        {
-                            ID = 49,
-                            ArrowLength = 38.909228949301905,
-                            ArrowQuantity = 7,
-                            MinQuantity = 0,
-                            State = "New"
-                        },
-                        new
-                        {
-                            ID = 50,
-                            ArrowLength = 30.955135255116911,
-                            ArrowQuantity = 8,
-                            MinQuantity = 0,
-                            State = "Used"
-                        },
-                        new
-                        {
                             ID = 51,
-                            ArrowLength = 30.006605491087971,
-                            ArrowQuantity = 8,
+                            ArrowLength = 20.209184544416861,
+                            ArrowQuantity = 12,
                             MinQuantity = 0,
                             State = "New"
                         },
                         new
                         {
                             ID = 52,
-                            ArrowLength = 24.81612164873841,
+                            ArrowLength = 24.732469978127419,
                             ArrowQuantity = 12,
                             MinQuantity = 0,
-                            State = "Used"
+                            State = "New"
                         },
                         new
                         {
                             ID = 53,
-                            ArrowLength = 23.366387968634449,
-                            ArrowQuantity = 7,
+                            ArrowLength = 28.644330937620737,
+                            ArrowQuantity = 8,
                             MinQuantity = 0,
                             State = "Broken"
                         },
                         new
                         {
                             ID = 54,
-                            ArrowLength = 21.206729904099074,
-                            ArrowQuantity = 7,
+                            ArrowLength = 27.948336062230901,
+                            ArrowQuantity = 8,
+                            MinQuantity = 0,
+                            State = "Used"
+                        },
+                        new
+                        {
+                            ID = 55,
+                            ArrowLength = 33.71357524788629,
+                            ArrowQuantity = 6,
+                            MinQuantity = 0,
+                            State = "Used"
+                        },
+                        new
+                        {
+                            ID = 56,
+                            ArrowLength = 31.46373826922812,
+                            ArrowQuantity = 12,
                             MinQuantity = 0,
                             State = "Broken"
+                        },
+                        new
+                        {
+                            ID = 57,
+                            ArrowLength = 21.88019982044564,
+                            ArrowQuantity = 9,
+                            MinQuantity = 0,
+                            State = "Broken"
+                        },
+                        new
+                        {
+                            ID = 58,
+                            ArrowLength = 39.901794111854144,
+                            ArrowQuantity = 7,
+                            MinQuantity = 0,
+                            State = "Used"
                         });
                 });
 
@@ -260,62 +260,62 @@ namespace ArcheryMAS.Migrations
                     b.HasData(
                         new
                         {
-                            NickName = "Barron",
-                            Force = 59.540117333295747,
-                            Manufacturer = "Mathews"
-                        },
-                        new
-                        {
-                            NickName = "Kai",
-                            Force = 89.341091936417129,
-                            Manufacturer = "PSE"
-                        },
-                        new
-                        {
-                            NickName = "Loki",
-                            Force = 80.779617393814306,
-                            Manufacturer = "Easton"
-                        },
-                        new
-                        {
-                            NickName = "Niko",
-                            Force = 80.594503182016695,
-                            Manufacturer = "Mathews"
-                        },
-                        new
-                        {
-                            NickName = "Ginger",
-                            Force = 28.379126707026682,
-                            Manufacturer = "PSE"
+                            NickName = "Beazle",
+                            Force = 83.874604578071256,
+                            Manufacturer = "Polaris"
                         },
                         new
                         {
                             NickName = "Moby",
-                            Force = 59.224490326244862,
-                            Manufacturer = "Hoyt"
-                        },
-                        new
-                        {
-                            NickName = "Moe",
-                            Force = 46.800722963384736,
-                            Manufacturer = "Mathews"
-                        },
-                        new
-                        {
-                            NickName = "Mako",
-                            Force = 94.588001524327694,
+                            Force = 64.648084459328203,
                             Manufacturer = "Bear"
                         },
                         new
                         {
-                            NickName = "Kota",
-                            Force = 49.350304875064033,
+                            NickName = "Neo",
+                            Force = 26.130856683460205,
                             Manufacturer = "PSE"
                         },
                         new
                         {
+                            NickName = "Kylo",
+                            Force = 12.771510177899565,
+                            Manufacturer = "Hoyt"
+                        },
+                        new
+                        {
+                            NickName = "Knox",
+                            Force = 16.703210418913581,
+                            Manufacturer = "Polaris"
+                        },
+                        new
+                        {
                             NickName = "Huss",
-                            Force = 84.655076454387881,
+                            Force = 43.026440329525371,
+                            Manufacturer = "Polaris"
+                        },
+                        new
+                        {
+                            NickName = "Nile",
+                            Force = 66.085100599444303,
+                            Manufacturer = "Polaris"
+                        },
+                        new
+                        {
+                            NickName = "Mars",
+                            Force = 24.079378548180991,
+                            Manufacturer = "Hoyt"
+                        },
+                        new
+                        {
+                            NickName = "Kai",
+                            Force = 64.883343481450964,
+                            Manufacturer = "PSE"
+                        },
+                        new
+                        {
+                            NickName = "Bake",
+                            Force = 87.909506492872524,
                             Manufacturer = "Bear"
                         });
                 });
@@ -334,6 +334,32 @@ namespace ArcheryMAS.Migrations
                     b.HasKey("Person_PESEL");
 
                     b.ToTable("Coach");
+
+                    b.HasData(
+                        new
+                        {
+                            Person_PESEL = "79506123851",
+                            Bonus = 626,
+                            MinSalary = 5000
+                        },
+                        new
+                        {
+                            Person_PESEL = "99420785581",
+                            Bonus = 867,
+                            MinSalary = 5000
+                        },
+                        new
+                        {
+                            Person_PESEL = "63067105383",
+                            Bonus = 968,
+                            MinSalary = 5000
+                        },
+                        new
+                        {
+                            Person_PESEL = "01703123432",
+                            Bonus = 343,
+                            MinSalary = 5000
+                        });
                 });
 
             modelBuilder.Entity("ArcheryMAS.Migrations.Competition", b =>
@@ -432,93 +458,93 @@ namespace ArcheryMAS.Migrations
                     b.HasData(
                         new
                         {
-                            PESEL = "55655467444",
-                            ArrowSet_ID = 48,
-                            Bow_NickName = "Ginger",
-                            DateOfBirth = new DateTime(1969, 6, 11, 14, 26, 41, 522, DateTimeKind.Local).AddTicks(2047),
-                            Names = "Janusz, Ansgary",
-                            Surname = "Dudziak"
-                        },
-                        new
-                        {
-                            PESEL = "13355429133",
-                            ArrowSet_ID = 53,
-                            Bow_NickName = "Kota",
-                            DateOfBirth = new DateTime(1957, 11, 16, 12, 44, 50, 625, DateTimeKind.Local).AddTicks(8187),
-                            Names = "Makary, Rajnold",
-                            Surname = "Urbanowicz"
-                        },
-                        new
-                        {
-                            PESEL = "19912380255",
-                            ArrowSet_ID = 50,
-                            Bow_NickName = "Moby",
-                            DateOfBirth = new DateTime(1971, 9, 11, 22, 49, 20, 700, DateTimeKind.Local).AddTicks(9655),
-                            Names = "Teodor, Kira",
-                            Surname = "Janusz"
-                        },
-                        new
-                        {
-                            PESEL = "18175766436",
-                            ArrowSet_ID = 49,
-                            Bow_NickName = "Moe",
-                            DateOfBirth = new DateTime(1998, 3, 12, 9, 20, 10, 420, DateTimeKind.Local).AddTicks(3091),
-                            Names = "Lea, Aleksandra",
-                            Surname = "Panek"
-                        },
-                        new
-                        {
-                            PESEL = "41398581242",
-                            ArrowSet_ID = 46,
-                            Bow_NickName = "Kai",
-                            DateOfBirth = new DateTime(1997, 2, 24, 16, 22, 7, 342, DateTimeKind.Local).AddTicks(1719),
-                            Names = "Agaton, Małgorzata",
-                            Surname = "Michalik"
-                        },
-                        new
-                        {
-                            PESEL = "77546760995",
-                            ArrowSet_ID = 47,
-                            Bow_NickName = "Loki",
-                            DateOfBirth = new DateTime(1998, 4, 17, 5, 1, 11, 277, DateTimeKind.Local).AddTicks(6065),
-                            Names = "Karolina, Kira",
-                            Surname = "Kasperek"
-                        },
-                        new
-                        {
-                            PESEL = "01031833697",
-                            ArrowSet_ID = 52,
-                            Bow_NickName = "Huss",
-                            DateOfBirth = new DateTime(1975, 5, 28, 3, 0, 51, 97, DateTimeKind.Local).AddTicks(9098),
-                            Names = "Judyta, Ludwika",
-                            Surname = "Wieczorek"
-                        },
-                        new
-                        {
-                            PESEL = "24819451900",
-                            ArrowSet_ID = 45,
-                            Bow_NickName = "Barron",
-                            DateOfBirth = new DateTime(1977, 11, 1, 5, 53, 38, 653, DateTimeKind.Local).AddTicks(6669),
-                            Names = "Kornelia, Izydor",
-                            Surname = "Chmiel"
-                        },
-                        new
-                        {
-                            PESEL = "17633020386",
+                            PESEL = "40509350330",
                             ArrowSet_ID = 54,
-                            Bow_NickName = "Mako",
-                            DateOfBirth = new DateTime(1974, 4, 17, 5, 56, 55, 843, DateTimeKind.Local).AddTicks(2421),
-                            Names = "Dina, Ida",
-                            Surname = "Jurkowski"
+                            Bow_NickName = "Beazle",
+                            DateOfBirth = new DateTime(1980, 8, 1, 13, 53, 36, 905, DateTimeKind.Local).AddTicks(4133),
+                            Names = "Eugenia, Leonid",
+                            Surname = "Gajda"
                         },
                         new
                         {
-                            PESEL = "76201434161",
+                            PESEL = "84604994968",
+                            ArrowSet_ID = 50,
+                            Bow_NickName = "Neo",
+                            DateOfBirth = new DateTime(1972, 8, 27, 11, 30, 43, 598, DateTimeKind.Local).AddTicks(1925),
+                            Names = "Sergiusz, Apollinary",
+                            Surname = "Żebrowski"
+                        },
+                        new
+                        {
+                            PESEL = "99420785581",
+                            ArrowSet_ID = 57,
+                            Bow_NickName = "Kylo",
+                            DateOfBirth = new DateTime(1997, 9, 17, 2, 35, 9, 25, DateTimeKind.Local).AddTicks(9455),
+                            Names = "Eliza, Hieronim",
+                            Surname = "Palacz"
+                        },
+                        new
+                        {
+                            PESEL = "01703123432",
+                            ArrowSet_ID = 56,
+                            Bow_NickName = "Bake",
+                            DateOfBirth = new DateTime(1999, 12, 11, 2, 4, 27, 43, DateTimeKind.Local).AddTicks(7348),
+                            Names = "Estera, Nadzieja",
+                            Surname = "Winiarski"
+                        },
+                        new
+                        {
+                            PESEL = "13059870195",
+                            ArrowSet_ID = 58,
+                            Bow_NickName = "Nile",
+                            DateOfBirth = new DateTime(1959, 3, 24, 7, 14, 33, 780, DateTimeKind.Local).AddTicks(6869),
+                            Names = "Eliza, Serafina",
+                            Surname = "Wojtczak"
+                        },
+                        new
+                        {
+                            PESEL = "79506123851",
+                            ArrowSet_ID = 55,
+                            Bow_NickName = "Moby",
+                            DateOfBirth = new DateTime(1981, 8, 3, 0, 18, 53, 662, DateTimeKind.Local).AddTicks(7736),
+                            Names = "Ilona, Fryderyk",
+                            Surname = "Szymczak"
+                        },
+                        new
+                        {
+                            PESEL = "65885693917",
+                            ArrowSet_ID = 49,
+                            Bow_NickName = "Huss",
+                            DateOfBirth = new DateTime(2002, 4, 18, 22, 21, 39, 546, DateTimeKind.Local).AddTicks(2543),
+                            Names = "Serafina, Sergiusz",
+                            Surname = "Golec"
+                        },
+                        new
+                        {
+                            PESEL = "62521228462",
+                            ArrowSet_ID = 53,
+                            Bow_NickName = "Knox",
+                            DateOfBirth = new DateTime(1964, 7, 7, 6, 13, 41, 33, DateTimeKind.Local).AddTicks(9997),
+                            Names = "Nazary, Fryderyk",
+                            Surname = "Przybyła"
+                        },
+                        new
+                        {
+                            PESEL = "81749421112",
                             ArrowSet_ID = 51,
-                            Bow_NickName = "Niko",
-                            DateOfBirth = new DateTime(1981, 10, 24, 11, 30, 10, 848, DateTimeKind.Local).AddTicks(7994),
-                            Names = "Leila, Daniel",
-                            Surname = "Jędrzejewski"
+                            Bow_NickName = "Kai",
+                            DateOfBirth = new DateTime(1986, 5, 12, 20, 0, 5, 743, DateTimeKind.Local).AddTicks(2646),
+                            Names = "Ansgary, Erast",
+                            Surname = "Guzik"
+                        },
+                        new
+                        {
+                            PESEL = "63067105383",
+                            ArrowSet_ID = 52,
+                            Bow_NickName = "Mars",
+                            DateOfBirth = new DateTime(1977, 5, 15, 23, 42, 45, 568, DateTimeKind.Local).AddTicks(5539),
+                            Names = "Franciszka, Adrian",
+                            Surname = "Kwiatkowski"
                         });
                 });
 

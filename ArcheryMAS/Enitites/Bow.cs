@@ -15,8 +15,7 @@ public partial class Bow
 
     public string Manufacturer { get; set; } = null!;
 
-    [Column(TypeName = "double")]
-    public double Force { get; set; }
+    [Column(TypeName = "double")] public double Force { get; set; }
 
     [InverseProperty("Bow_NickNameNavigation")]
     public virtual CompoundBow? CompoundBow { get; set; }

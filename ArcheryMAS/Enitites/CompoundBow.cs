@@ -9,11 +9,9 @@ namespace ArcheryMAS.Migrations;
 [Table("CompoundBow")]
 public partial class CompoundBow
 {
-    [Key]
-    public string Bow_NickName { get; set; } = null!;
+    [Key] public string Bow_NickName { get; set; } = null!;
 
-    [Column(TypeName = "double")]
-    public double OpticalZoom { get; set; }
+    [Column(TypeName = "double")] public double OpticalZoom { get; set; }
 
     [ForeignKey("Bow_NickName")]
     [InverseProperty("CompoundBow")]

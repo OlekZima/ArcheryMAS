@@ -10,19 +10,15 @@ namespace ArcheryMAS.Migrations;
 [Table("UniversalSet")]
 public partial class UniversalSet
 {
-    [Column(TypeName = "double")]
-    public double Price { get; set; }
+    [Column(TypeName = "double")] public double Price { get; set; }
 
     public int Age { get; set; }
 
-    [Key]
-    public int ArrowSetIndoor_ArrowSet_ID { get; set; }
+    [Key] public int ArrowSetIndoor_ArrowSet_ID { get; set; }
 
-    [Key]
-    public int ArrowSetOutdoor_ArrowSet_ID { get; set; }
+    [Key] public int ArrowSetOutdoor_ArrowSet_ID { get; set; }
 
-    [Key]
-    public int ArrowSetTraining_ArrowSet_ID { get; set; }
+    [Key] public int ArrowSetTraining_ArrowSet_ID { get; set; }
 
     [ForeignKey("ArrowSetIndoor_ArrowSet_ID")]
     [InverseProperty("UniversalSets")]

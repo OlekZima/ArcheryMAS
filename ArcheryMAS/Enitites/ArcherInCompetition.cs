@@ -16,11 +16,9 @@ public partial class ArcherInCompetition
 
     public string Prize { get; set; } = null!;
 
-    [Key]
-    public string Archer_Person_PESEL { get; set; } = null!;
+    [Key] public string Archer_Person_PESEL { get; set; } = null!;
 
-    [Key]
-    public string Competition_Name { get; set; } = null!;
+    [Key] public string Competition_Name { get; set; } = null!;
 
     [ForeignKey("Archer_Person_PESEL")]
     [InverseProperty("ArcherInCompetitions")]
