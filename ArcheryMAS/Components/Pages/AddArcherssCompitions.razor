@@ -1,0 +1,162 @@
+@page "/AddArcherssCompitions"
+@using ArcheryMAS.Context
+@using ArcheryMAS.Enitites
+@using ArcheryMAS.Service
+@using ArcheryMAS.ViewModels
+@using Person = Bogus.Person
+@rendermode InteractiveServer
+
+@inject NavigationManager NavigationManager
+@inject ArcherService ArcherService
+@inject CompetitionService CompetitionService
+@inject ArcheryDbContext DbContext
+
+<h2>Wyszukaj Zawodnika</h2>
+<div class="row">
+    <div class="search-section col">
+        <label for="name">Imiona:</label>
+        <input @bind="searchCriteria.Names" id="name" type="text" placeholder="Imiona (przez przycinki)">
+        <label for="surname">Nazwisko:</label>
+        <input @bind="searchCriteria.Surname" id="surname" type="text" placeholder="Nazwisko">
+        <label for="pesel">PESEL:</label>
+        <input @bind="searchCriteria.PESEL" id="pesel" type="text" placeholder="Pesel">
+        <label for="coach">Trener:</label>
+        <input @bind="searchCriteria.Coach" id="coach" type="text" placeholder="Trener">
+        <label for="competition">Zawody:</label>
+        <select @onchange="OnCompetitionChanged">
+            @foreach (var competition in _competitions)
+            {
+                <option value="@competition.Name">@competition.Name</option>
+            }
+        </select>
+        <button @onclick="GetArchersByName">Szukaj</button>
+        <button onclick="location.href='/'">Wróć do menu</button>
+    </div>
+    <div class="table-section col">
+        <table>
+            <thead>
+            <tr>
+                <th>Dodaj</th>
+                <th>Imię</th>
+                <th>Nazwisko</th>
+                <th>Ranga</th>
+                <th>PESEL</th>
+                <th>Trener</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var archer in _searchResults)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" @bind="archer.IsSelected"/>
+                    </td>
+                    <td>@archer.Archer.Person_PESELNavigation.Names</td>
+                    <td>@archer.Archer.Person_PESELNavigation.Surname</td>
+                    <td>@archer.Archer.Rank</td>
+                    <td>@archer.Archer.Person_PESELNavigation.PESEL</td>
+                    <td>@archer.Archer.Person_PESELNavigation.Coach?.Person_PESELNavigation.FullName</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <button @onclick="AcceptSelection">Akceptuj</button>
+    </div>
+</div>
+
+
+@code {
+    private List<Competition> _competitions = new List<Competition>();
+    private List<ArcherViewModel> _searchResults = new List<ArcherViewModel>();
+    private SearchCriteria searchCriteria = new SearchCriteria();
+    private Competition selectedCompetition = new Competition();
+    private string? selectedCompetitionId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _competitions = await CompetitionService.GetAllCompetitionsAsync();
+    }
+
+
+    private void AcceptSelection()
+    {
+        var selectedArchers = _searchResults.Where(a => a.IsSelected).Select(vm => vm.Archer).ToList();
+        Console.WriteLine($"{selectedArchers.Count} archers selected.");
+    }
+
+    private Task OnCompetitionChanged(ChangeEventArgs e)
+    {
+        selectedCompetitionId = e.Value?.ToString();
+        selectedCompetition = _competitions.FirstOrDefault(c => c.Name == selectedCompetitionId);
+        Console.WriteLine($"Selected competition: {selectedCompetition?.Name}");
+        return Task.CompletedTask;
+    }
+
+    public class SearchCriteria
+    {
+        public string Names { get; set; }
+        public string Surname { get; set; }
+        public string PESEL { get; set; }
+        public string Coach { get; set; }
+    }
+
+
+}
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .search-section, .table-section {
+        padding: 20px;
+        height: 90vh;
+        overflow-y: auto;
+    }
+    h2 {
+        margin-top: 0;
+    }
+    
+    label, input, button {
+        display: block; 
+        margin: 5px 0;  
+        width: 100%;    
+    }
+    
+    input, button {
+         padding: 8px;
+    }
+    
+    select {
+        padding: 8px;
+        width: 100%;
+    }
+    
+    button {
+        color: white;
+        border: none;
+        cursor: pointer;
+        background-color: rgb(89, 117, 55);
+        border-radius: 10px;
+    }
+    
+    button:hover {
+        background-color: #367c39;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .scrollable {
+        max-height: calc(100vh - 150px);
+        overflow-y: auto;
+    }
+</style>

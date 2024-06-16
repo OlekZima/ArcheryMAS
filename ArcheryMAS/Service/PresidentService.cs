@@ -1,4 +1,5 @@
 using ArcheryMAS.Context;
+using ArcheryMAS.Enitites;
 using ArcheryMAS.Migrations;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,10 +19,12 @@ public class PresidentService
         _dbContext.Presidents.Add(president);
         await _dbContext.SaveChangesAsync();
     }
-    
-    
+
+
     public async Task<President?> GetPresidentsAsync()
     {
-        return await _dbContext.Presidents.FirstOrDefaultAsync();
+        return await _dbContext.Presidents
+            .Include(p => p.Person_PESELNavigation)
+            .FirstOrDefaultAsync();
     }
 }

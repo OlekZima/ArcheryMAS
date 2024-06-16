@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using ArcheryMAS.Enitites;
 using ArcheryMAS.Migrations;
 using Bogus;
 using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
-using Person = ArcheryMAS.Migrations.Person;
+using Person = ArcheryMAS.Enitites.Person;
 
 namespace ArcheryMAS.Context;
 

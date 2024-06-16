@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ArcheryMAS.Enitites;
 using Microsoft.EntityFrameworkCore;
 
-namespace ArcheryMAS.Migrations;
+namespace ArcheryMAS.Enitites;
 
 [PrimaryKey("Archer_Person_PESEL", "Coach_Person_PESEL")]
 public partial class Training

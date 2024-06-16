@@ -1,0 +1,142 @@
+@page "/addcompetition1/"
+@using ArcheryMAS.Enitites
+@using System.ComponentModel.DataAnnotations
+@using ArcheryMAS.Context
+@inject ArcheryDbContext dbContext
+@using ArcheryMAS.Service
+@inject ArcheryMAS.Service.CompetitionService CompetitionService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+@code {
+    public Competition competition = new();
+    private bool showErrorMessage = true;
+    private string errorMessage = "Data zawodów musi być większa niż dzisiejsza data.";
+    public DateTime datenow = DateTime.Now.Date;
+
+    private async Task HandleValidSubmit()
+    {
+        if (showErrorMessage)
+        {
+            if (competition.DateAndTimeStart < datenow)
+            {
+                errorMessage = "Data zawodów musi być większa niż dzisiejsza data.";
+                showErrorMessage = true;
+            }
+            else if (competition.DateAndTimeEnd < competition.DateAndTimeStart)
+            {
+                errorMessage = "Data zakończenia zawodów musi być późniejsza niż data rozpoczęcia.";
+                showErrorMessage = true;
+            }
+            else if (competition.Description != null && competition.Description.Length > 200)
+            {
+                errorMessage = "Opis nie może przekraczać 200 znaków.";
+                showErrorMessage = true;
+            }
+            else
+            {
+                showErrorMessage = false;
+            }
+        }
+        else
+        {
+            competition.State = "Announced";
+            showErrorMessage = false;
+
+            await CompetitionService.AddCompetitionAsync(competition);
+            NavigationManager.NavigateTo("/addcompetition3/");
+        }
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+}
+
+<EditForm Model="competition" OnValidSubmit="HandleValidSubmit" FormName="form1">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="container">
+        <div class="header">STWÓRZ ZAWODY</div>
+        <div class="header">Miejsce i daty</div>
+        <InputText @bind-Value="@competition.Place" class="input" placeholder="Miejsce zawodów"/>
+        <div class="header">Data rozpoczęcia</div>
+        <InputDate @bind-Value="@competition.DateAndTimeStart" class="input" min="2024-16-06"/>
+        <div class="header">Data zakończenia</div>
+        <InputDate @bind-Value="competition.DateAndTimeEnd" class="input" min="2024-16-06"/>
+
+        <div class="header">Podstawowe informacje</div>
+        <InputText @bind-Value="@competition.Name" class="input" placeholder="Nazwa zawodów"/>
+        <InputTextArea @bind-Value="competition.Description" class="textarea" placeholder="Opcjonalny opis zawodów"/>
+
+        @if (showErrorMessage)
+        {
+            <p class="error-message">@errorMessage</p>
+        }
+
+        <div class="buttons">
+            <button type="button" @onclick="GoBack">← Wróć</button>
+            <button type="submit">Przejdź dalej →</button>
+        </div>
+    </div>
+</EditForm>
+
+<style>
+    .container {
+        width: 90%;
+        max-width: 600px;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .input, .textarea {
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: calc(90% - 22px);
+        display: inline-block;
+    }
+
+    .textarea {
+        height: 170px;
+        resize: vertical;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        background-color: rgb(89, 117, 55);
+        color: white;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #367c39;
+    }
+
+    .header {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 10px;
+    }
+</style>

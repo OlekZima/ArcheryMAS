@@ -1,19 +1,24 @@
 @page "/"
+@using ArcheryMAS.Enitites
 @using ArcheryMAS.Migrations
 @using ArcheryMAS.Service
-
 @rendermode InteractiveServer
 @inject PresidentService PresidentService
 
 <style>
+    
     .page-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        height: 100vh;
+        height: 95vh;
         font-family: Arial, sans-serif;
+        background-image: url('https://cdn.discordapp.com/attachments/911371400130994267/1251978703802728498/image.png?ex=66708b87&is=666f3a07&hm=f4d3fbffd3167562e8ac118762e535269d7bf629193698b1baafee95ad305f2b&');
+        background-size: cover;
+        background-position: center;
     }
+    
 
     .header {
         align-self: flex-start;
@@ -36,16 +41,26 @@
 
     .button {
         padding: 10px 20px;
-        background-color: #4CAF50;
+        background-color: rgb(89, 117, 55);
         color: white;
         border: none;
         cursor: pointer;
         transition: background-color 0.3s;
+        border-radius: 10px;
     }
 
     .button:hover {
         background-color: #367c39;
     }
+    
+    .president {
+        font-size: 50px;
+        color: black;
+        padding: 20px;
+        font-family: "Bebas Neue";
+    }
+    
+    
 
 </style>
 
@@ -53,45 +68,44 @@
 @code {
     private President president;
     string presidentFullName;
-    // string PresidentName = "Jan Kowalski"; // Możesz to usunąć, jeśli nie jest używane
+    // string PresidentName = "Jan Kowalski";
 
     protected override async Task OnInitializedAsync()
     {
         president = await PresidentService.GetPresidentsAsync();
-        if (president != null && president.Person_PESELNavigation != null)
+        if (president != null)
         {
-            presidentFullName = $"{president.Person_PESELNavigation.FullName} {president.Person_PESELNavigation.Surname}";
+            presidentFullName = $"{president?.Person_PESELNavigation.FullName}";
         }
         else
         {
             presidentFullName = "";
-
-
         }
     }
 
 }
 
-
-    <PageTitle>LKS Łucznik Żywiec</PageTitle>
-
+<PageTitle>LKS Łucznik Żywiec</PageTitle>
 <div class="page-container">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <div class="president">
-        Witaj, @presidentFullName!
+        Witaj, Prezesie @presidentFullName!
     </div>
 
-    <div class="title">
-        <h2>LKS ŁUCZNIK ŻYWIEC</h2>
-    </div>
+    @* <div class="title"> *@
+    @*     <h2>LKS ŁUCZNIK ŻYWIEC</h2> *@
+    @* </div> *@
 
     <div class="buttons">
-        <button class="button">Dodaj zawody</button>
-        <button class="button">Dodaj zawodnika</button>
+        <button class="button" onclick="location.href='/addcompetition1'">Dodaj zawody</button>
+        <button class="button" onclick="location.href='/AddArcherssCompitions'">Dodaj zawodników</button>
         <button class="button">Edytuj zawodnika</button>
         <button class="button">Edytuj sprzęt</button>
     </div>
 </div>
 
 @code {
-    string PresidentName = "Jan Kowalski";
+    // string PresidentName = "Jan Kowalski";
 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using ArcheryMAS.Migrations;
 
-namespace ArcheryMAS.Migrations;
+namespace ArcheryMAS.Enitites;
 
 [Table("Bow")]
 public partial class Bow
