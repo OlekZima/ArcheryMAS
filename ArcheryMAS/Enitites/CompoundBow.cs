@@ -4,25 +4,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace ArcheryMAS.Entities;
+namespace ArcheryMAS.Migrations;
 
 [Table("CompoundBow")]
 public partial class CompoundBow
 {
-    [Key] public string Bow_NickName { get; set; } = null!;
+    [Key]
+    public string Bow_NickName { get; set; } = null!;
 
     [Column(TypeName = "double")]
-    public double OpticalZoom
-    {
-        get => OpticalZoom;
-        set
-        {
-            if (value >= 2.5)
-            {
-                throw new Exception("OpticalZoom is too strong!");
-            }
-        }
-    }
+    public double OpticalZoom { get; set; }
 
     [ForeignKey("Bow_NickName")]
     [InverseProperty("CompoundBow")]

@@ -4,14 +4,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace ArcheryMAS.Entities;
+namespace ArcheryMAS.Migrations;
 
 [Table("ArrowSetTraining")]
 public partial class ArrowSetTraining
 {
-    public string Material { get; set; } = "Aluminum";
+    public string Material { get; set; } = null!;
 
-    [Key] public int ArrowSet_ID { get; set; }
+    [Key]
+    public int ArrowSet_ID { get; set; }
 
     [ForeignKey("ArrowSet_ID")]
     [InverseProperty("ArrowSetTraining")]

@@ -4,18 +4,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace ArcheryMAS.Entities;
+namespace ArcheryMAS.Migrations;
 
 [PrimaryKey("Archer_Person_PESEL", "Coach_Person_PESEL")]
 public partial class Training
 {
-    [Key] public string Archer_Person_PESEL { get; set; } = null!;
+    [Key]
+    public string Archer_Person_PESEL { get; set; } = null!;
 
-    [Key] public string Coach_Person_PESEL { get; set; } = null!;
+    [Key]
+    public string Coach_Person_PESEL { get; set; } = null!;
 
-    [Column(TypeName = "datetime")] public DateTime DateAndTimeTrainingStart { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime DateAndTimeTrainingStart { get; set; }
 
-    [Column(TypeName = "datetime")] public DateTime DateAndTimeTrainingEnd { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime DateAndTimeTrainingEnd { get; set; }
 
     [ForeignKey("Archer_Person_PESEL")]
     [InverseProperty("Training")]

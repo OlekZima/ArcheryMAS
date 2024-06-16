@@ -1,11 +1,7 @@
 -- Created by Vertabelo (http://vertabelo.com)
--- Last modification date: 2024-06-12 22:00:33.333
+-- Last modification date: 2024-06-16 12:25:11.798
 
 -- foreign keys
--- ALTER TABLE DROP CONSTRAINT not supported -> create new table and copy values instead
-
--- ALTER TABLE DROP CONSTRAINT not supported -> create new table and copy values instead
-
 -- ALTER TABLE DROP CONSTRAINT not supported -> create new table and copy values instead
 
 -- ALTER TABLE DROP CONSTRAINT not supported -> create new table and copy values instead
@@ -61,13 +57,9 @@ DROP TABLE Competition;
 
 DROP TABLE CompoundBow;
 
-DROP TABLE Name;
-
 DROP TABLE OlympicBow;
 
 DROP TABLE Person;
-
-DROP TABLE PersonNames;
 
 DROP TABLE President;
 

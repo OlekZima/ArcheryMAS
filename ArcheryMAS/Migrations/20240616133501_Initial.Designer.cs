@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArcheryMAS.Migrations
 {
     [DbContext(typeof(ArcheryDbContext))]
-    [Migration("20240614222716_Persons")]
-    partial class Persons
+    [Migration("20240616133501_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace ArcheryMAS.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Archer", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Archer", b =>
                 {
                     b.Property<string>("Person_PESEL")
                         .HasColumnType("TEXT");
@@ -37,13 +37,13 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("Archer");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArcherInCompetition", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArcherInCompetition", b =>
                 {
                     b.Property<string>("Archer_Person_PESEL")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Competition_Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("PlaceInCompetition")
                         .HasColumnType("INTEGER");
@@ -62,7 +62,7 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("ArcherInCompetition");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSet", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSet", b =>
                 {
                     b.Property<int>("ID")
                         .HasColumnType("INTEGER");
@@ -73,9 +73,8 @@ namespace ArcheryMAS.Migrations
                     b.Property<int>("ArrowQuantity")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Person_PESEL")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("MinQuantity")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -83,12 +82,10 @@ namespace ArcheryMAS.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("Person_PESEL");
-
                     b.ToTable("ArrowSet");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetIndoor", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetIndoor", b =>
                 {
                     b.Property<int>("ArrowSet_ID")
                         .HasColumnType("INTEGER");
@@ -96,12 +93,15 @@ namespace ArcheryMAS.Migrations
                     b.Property<double>("Diameter")
                         .HasColumnType("double");
 
+                    b.Property<double>("MaxDiameter")
+                        .HasColumnType("double");
+
                     b.HasKey("ArrowSet_ID");
 
                     b.ToTable("ArrowSetIndoor");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetOutdoor", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetOutdoor", b =>
                 {
                     b.Property<int>("ArrowSet_ID")
                         .HasColumnType("INTEGER");
@@ -113,12 +113,15 @@ namespace ArcheryMAS.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("MaxDiameter")
+                        .HasColumnType("double");
+
                     b.HasKey("ArrowSet_ID");
 
                     b.ToTable("ArrowSetOutdoor");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetTraining", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetTraining", b =>
                 {
                     b.Property<int>("ArrowSet_ID")
                         .HasColumnType("INTEGER");
@@ -132,10 +135,10 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("ArrowSetTraining");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Bow", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Bow", b =>
                 {
                     b.Property<string>("NickName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<double>("Force")
                         .HasColumnType("double");
@@ -151,67 +154,67 @@ namespace ArcheryMAS.Migrations
                     b.HasData(
                         new
                         {
-                            NickName = "Jinx",
-                            Force = 91.0,
-                            Manufacturer = "Easton"
-                        },
-                        new
-                        {
-                            NickName = "Kane",
-                            Force = 15.0,
-                            Manufacturer = "Polaris"
-                        },
-                        new
-                        {
-                            NickName = "Jax",
-                            Force = 41.0,
+                            NickName = "Niko",
+                            Force = 51.811446980085286,
                             Manufacturer = "Mathews"
                         },
                         new
                         {
-                            NickName = "Knox",
-                            Force = 64.0,
-                            Manufacturer = "Easton"
-                        },
-                        new
-                        {
-                            NickName = "Milo",
-                            Force = 42.0,
+                            NickName = "JB",
+                            Force = 60.581451359478272,
                             Manufacturer = "PSE"
                         },
                         new
                         {
-                            NickName = "Kruz",
-                            Force = 90.0,
-                            Manufacturer = "Bear"
+                            NickName = "Ginger",
+                            Force = 83.667728707670094,
+                            Manufacturer = "PSE"
+                        },
+                        new
+                        {
+                            NickName = "Jax",
+                            Force = 79.660188688116747,
+                            Manufacturer = "PSE"
                         },
                         new
                         {
                             NickName = "Mako",
-                            Force = 40.0,
+                            Force = 21.876868033532027,
                             Manufacturer = "Easton"
                         },
                         new
                         {
-                            NickName = "Kyan",
-                            Force = 77.0,
-                            Manufacturer = "PSE"
-                        },
-                        new
-                        {
-                            NickName = "Kota",
-                            Force = 68.0,
+                            NickName = "Kai",
+                            Force = 27.061067505680814,
                             Manufacturer = "Bear"
                         },
                         new
                         {
-                            NickName = "Neo",
-                            Force = 59.0,
+                            NickName = "Nile",
+                            Force = 49.881938341900671,
                             Manufacturer = "PSE"
+                        },
+                        new
+                        {
+                            NickName = "Kona",
+                            Force = 17.79957357514877,
+                            Manufacturer = "PSE"
+                        },
+                        new
+                        {
+                            NickName = "Koda",
+                            Force = 19.793066423654764,
+                            Manufacturer = "Bear"
+                        },
+                        new
+                        {
+                            NickName = "Kip",
+                            Force = 66.725081222875303,
+                            Manufacturer = "Mathews"
                         });
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Coach", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Coach", b =>
                 {
                     b.Property<string>("Person_PESEL")
                         .HasColumnType("TEXT");
@@ -219,15 +222,18 @@ namespace ArcheryMAS.Migrations
                     b.Property<int>("Bonus")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("MinSalary")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Person_PESEL");
 
                     b.ToTable("Coach");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Competition", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Competition", b =>
                 {
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("CancelingReason")
                         .HasColumnType("TEXT");
@@ -239,7 +245,7 @@ namespace ArcheryMAS.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(200)");
 
                     b.Property<string>("Place")
                         .IsRequired()
@@ -254,10 +260,10 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("Competition");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.CompoundBow", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.CompoundBow", b =>
                 {
                     b.Property<string>("Bow_NickName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<double>("OpticalZoom")
                         .HasColumnType("double");
@@ -267,12 +273,15 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("CompoundBow");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.OlympicBow", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.OlympicBow", b =>
                 {
                     b.Property<string>("Bow_NickName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<int>("DaysWithoutService")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("MaxDaysWithoutService")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("NummberOfStabilizers")
@@ -283,7 +292,7 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("OlympicBow");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Person", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Person", b =>
                 {
                     b.Property<string>("PESEL")
                         .HasColumnType("TEXT");
@@ -293,7 +302,7 @@ namespace ArcheryMAS.Migrations
 
                     b.Property<string>("Bow_NickName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varchar(30)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("date");
@@ -308,104 +317,14 @@ namespace ArcheryMAS.Migrations
 
                     b.HasKey("PESEL");
 
+                    b.HasIndex("ArrowSet_ID");
+
                     b.HasIndex("Bow_NickName");
 
                     b.ToTable("Person");
-
-                    b.HasData(
-                        new
-                        {
-                            PESEL = "12261960704",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Kruz",
-                            DateOfBirth = new DateTime(2019, 5, 14, 21, 40, 8, 688, DateTimeKind.Local).AddTicks(8924),
-                            Names = "Korneli, Aurora",
-                            Surname = "Miller"
-                        },
-                        new
-                        {
-                            PESEL = "07093601852",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Kota",
-                            DateOfBirth = new DateTime(2016, 1, 22, 19, 53, 17, 507, DateTimeKind.Local).AddTicks(6255),
-                            Names = "Antoni, Lilia",
-                            Surname = "Trzciński"
-                        },
-                        new
-                        {
-                            PESEL = "32853957397",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Milo",
-                            DateOfBirth = new DateTime(2018, 5, 14, 16, 31, 21, 413, DateTimeKind.Local).AddTicks(7872),
-                            Names = "Grzegorz, Cecylia",
-                            Surname = "Woś"
-                        },
-                        new
-                        {
-                            PESEL = "69614421316",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Neo",
-                            DateOfBirth = new DateTime(2012, 12, 2, 2, 34, 38, 903, DateTimeKind.Local).AddTicks(3792),
-                            Names = "Albert, Łazarz",
-                            Surname = "Świerczyński"
-                        },
-                        new
-                        {
-                            PESEL = "84229279756",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Knox",
-                            DateOfBirth = new DateTime(2019, 3, 31, 21, 51, 5, 348, DateTimeKind.Local).AddTicks(5868),
-                            Names = "Walery, Ireneusz",
-                            Surname = "Komorowski"
-                        },
-                        new
-                        {
-                            PESEL = "66198006684",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Jax",
-                            DateOfBirth = new DateTime(2006, 8, 11, 22, 37, 34, 671, DateTimeKind.Local).AddTicks(6194),
-                            Names = "Marek, Bruno",
-                            Surname = "Herman"
-                        },
-                        new
-                        {
-                            PESEL = "82226925492",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Kane",
-                            DateOfBirth = new DateTime(2012, 5, 20, 17, 56, 23, 834, DateTimeKind.Local).AddTicks(4809),
-                            Names = "Edmund, Dariusz",
-                            Surname = "Siedlecki"
-                        },
-                        new
-                        {
-                            PESEL = "06512252497",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Kyan",
-                            DateOfBirth = new DateTime(2008, 7, 19, 18, 25, 23, 37, DateTimeKind.Local).AddTicks(7497),
-                            Names = "Bertrand, Henryka",
-                            Surname = "Antczak"
-                        },
-                        new
-                        {
-                            PESEL = "77553504020",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Jinx",
-                            DateOfBirth = new DateTime(2018, 9, 21, 3, 4, 42, 699, DateTimeKind.Local).AddTicks(8995),
-                            Names = "Tacjana, Korneliusz",
-                            Surname = "Adamowicz"
-                        },
-                        new
-                        {
-                            PESEL = "35550755289",
-                            ArrowSet_ID = 0,
-                            Bow_NickName = "Mako",
-                            DateOfBirth = new DateTime(2013, 12, 6, 14, 10, 13, 680, DateTimeKind.Local).AddTicks(2166),
-                            Names = "Orestes, Jeremiasz",
-                            Surname = "Bielski"
-                        });
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.President", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.President", b =>
                 {
                     b.Property<string>("Person_PESEL")
                         .HasColumnType("TEXT");
@@ -419,7 +338,7 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("President");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Training", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Training", b =>
                 {
                     b.Property<string>("Archer_Person_PESEL")
                         .HasColumnType("TEXT");
@@ -440,7 +359,7 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("Training");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.UniversalSet", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.UniversalSet", b =>
                 {
                     b.Property<int>("ArrowSetIndoor_ArrowSet_ID")
                         .HasColumnType("INTEGER");
@@ -466,24 +385,24 @@ namespace ArcheryMAS.Migrations
                     b.ToTable("UniversalSet");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Archer", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Archer", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Person", "Person_PESELNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Person", "Person_PESELNavigation")
                         .WithOne("Archer")
-                        .HasForeignKey("ArcheryMAS.Entities.Archer", "Person_PESEL")
+                        .HasForeignKey("ArcheryMAS.Migrations.Archer", "Person_PESEL")
                         .IsRequired();
 
                     b.Navigation("Person_PESELNavigation");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArcherInCompetition", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArcherInCompetition", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Archer", "Archer_Person_PESELNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Archer", "Archer_Person_PESELNavigation")
                         .WithMany("ArcherInCompetitions")
                         .HasForeignKey("Archer_Person_PESEL")
                         .IsRequired();
 
-                    b.HasOne("ArcheryMAS.Entities.Competition", "Competition_NameNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Competition", "Competition_NameNavigation")
                         .WithMany("ArcherInCompetitions")
                         .HasForeignKey("Competition_Name")
                         .IsRequired();
@@ -493,104 +412,101 @@ namespace ArcheryMAS.Migrations
                     b.Navigation("Competition_NameNavigation");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSet", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetIndoor", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Person", "Person_PESELNavigation")
-                        .WithMany("ArrowSets")
-                        .HasForeignKey("Person_PESEL")
-                        .IsRequired();
-
-                    b.Navigation("Person_PESELNavigation");
-                });
-
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetIndoor", b =>
-                {
-                    b.HasOne("ArcheryMAS.Entities.ArrowSet", "ArrowSet")
+                    b.HasOne("ArcheryMAS.Migrations.ArrowSet", "ArrowSet")
                         .WithOne("ArrowSetIndoor")
-                        .HasForeignKey("ArcheryMAS.Entities.ArrowSetIndoor", "ArrowSet_ID")
+                        .HasForeignKey("ArcheryMAS.Migrations.ArrowSetIndoor", "ArrowSet_ID")
                         .IsRequired();
 
                     b.Navigation("ArrowSet");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetOutdoor", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetOutdoor", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.ArrowSet", "ArrowSet")
+                    b.HasOne("ArcheryMAS.Migrations.ArrowSet", "ArrowSet")
                         .WithOne("ArrowSetOutdoor")
-                        .HasForeignKey("ArcheryMAS.Entities.ArrowSetOutdoor", "ArrowSet_ID")
+                        .HasForeignKey("ArcheryMAS.Migrations.ArrowSetOutdoor", "ArrowSet_ID")
                         .IsRequired();
 
                     b.Navigation("ArrowSet");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetTraining", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetTraining", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.ArrowSet", "ArrowSet")
+                    b.HasOne("ArcheryMAS.Migrations.ArrowSet", "ArrowSet")
                         .WithOne("ArrowSetTraining")
-                        .HasForeignKey("ArcheryMAS.Entities.ArrowSetTraining", "ArrowSet_ID")
+                        .HasForeignKey("ArcheryMAS.Migrations.ArrowSetTraining", "ArrowSet_ID")
                         .IsRequired();
 
                     b.Navigation("ArrowSet");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Coach", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Coach", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Person", "Person_PESELNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Person", "Person_PESELNavigation")
                         .WithOne("Coach")
-                        .HasForeignKey("ArcheryMAS.Entities.Coach", "Person_PESEL")
+                        .HasForeignKey("ArcheryMAS.Migrations.Coach", "Person_PESEL")
                         .IsRequired();
 
                     b.Navigation("Person_PESELNavigation");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.CompoundBow", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.CompoundBow", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Bow", "Bow_NickNameNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Bow", "Bow_NickNameNavigation")
                         .WithOne("CompoundBow")
-                        .HasForeignKey("ArcheryMAS.Entities.CompoundBow", "Bow_NickName")
+                        .HasForeignKey("ArcheryMAS.Migrations.CompoundBow", "Bow_NickName")
                         .IsRequired();
 
                     b.Navigation("Bow_NickNameNavigation");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.OlympicBow", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.OlympicBow", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Bow", "Bow_NickNameNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Bow", "Bow_NickNameNavigation")
                         .WithOne("OlympicBow")
-                        .HasForeignKey("ArcheryMAS.Entities.OlympicBow", "Bow_NickName")
+                        .HasForeignKey("ArcheryMAS.Migrations.OlympicBow", "Bow_NickName")
                         .IsRequired();
 
                     b.Navigation("Bow_NickNameNavigation");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Person", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Person", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Bow", "Bow_NickNameNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.ArrowSet", "ArrowSet")
+                        .WithMany("People")
+                        .HasForeignKey("ArrowSet_ID")
+                        .IsRequired();
+
+                    b.HasOne("ArcheryMAS.Migrations.Bow", "Bow_NickNameNavigation")
                         .WithMany("People")
                         .HasForeignKey("Bow_NickName")
                         .IsRequired();
 
+                    b.Navigation("ArrowSet");
+
                     b.Navigation("Bow_NickNameNavigation");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.President", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.President", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Person", "Person_PESELNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Person", "Person_PESELNavigation")
                         .WithOne("President")
-                        .HasForeignKey("ArcheryMAS.Entities.President", "Person_PESEL")
+                        .HasForeignKey("ArcheryMAS.Migrations.President", "Person_PESEL")
                         .IsRequired();
 
                     b.Navigation("Person_PESELNavigation");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Training", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Training", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.Archer", "Archer_Person_PESELNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Archer", "Archer_Person_PESELNavigation")
                         .WithMany("Training")
                         .HasForeignKey("Archer_Person_PESEL")
                         .IsRequired();
 
-                    b.HasOne("ArcheryMAS.Entities.Coach", "Coach_Person_PESELNavigation")
+                    b.HasOne("ArcheryMAS.Migrations.Coach", "Coach_Person_PESELNavigation")
                         .WithMany("Training")
                         .HasForeignKey("Coach_Person_PESEL")
                         .IsRequired();
@@ -600,19 +516,19 @@ namespace ArcheryMAS.Migrations
                     b.Navigation("Coach_Person_PESELNavigation");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.UniversalSet", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.UniversalSet", b =>
                 {
-                    b.HasOne("ArcheryMAS.Entities.ArrowSetIndoor", "ArrowSetIndoor_ArrowSet")
+                    b.HasOne("ArcheryMAS.Migrations.ArrowSetIndoor", "ArrowSetIndoor_ArrowSet")
                         .WithMany("UniversalSets")
                         .HasForeignKey("ArrowSetIndoor_ArrowSet_ID")
                         .IsRequired();
 
-                    b.HasOne("ArcheryMAS.Entities.ArrowSetOutdoor", "ArrowSetOutdoor_ArrowSet")
+                    b.HasOne("ArcheryMAS.Migrations.ArrowSetOutdoor", "ArrowSetOutdoor_ArrowSet")
                         .WithMany("UniversalSets")
                         .HasForeignKey("ArrowSetOutdoor_ArrowSet_ID")
                         .IsRequired();
 
-                    b.HasOne("ArcheryMAS.Entities.ArrowSetTraining", "ArrowSetTraining_ArrowSet")
+                    b.HasOne("ArcheryMAS.Migrations.ArrowSetTraining", "ArrowSetTraining_ArrowSet")
                         .WithMany("UniversalSets")
                         .HasForeignKey("ArrowSetTraining_ArrowSet_ID")
                         .IsRequired();
@@ -624,38 +540,40 @@ namespace ArcheryMAS.Migrations
                     b.Navigation("ArrowSetTraining_ArrowSet");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Archer", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Archer", b =>
                 {
                     b.Navigation("ArcherInCompetitions");
 
                     b.Navigation("Training");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSet", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSet", b =>
                 {
                     b.Navigation("ArrowSetIndoor");
 
                     b.Navigation("ArrowSetOutdoor");
 
                     b.Navigation("ArrowSetTraining");
+
+                    b.Navigation("People");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetIndoor", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetIndoor", b =>
                 {
                     b.Navigation("UniversalSets");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetOutdoor", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetOutdoor", b =>
                 {
                     b.Navigation("UniversalSets");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.ArrowSetTraining", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.ArrowSetTraining", b =>
                 {
                     b.Navigation("UniversalSets");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Bow", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Bow", b =>
                 {
                     b.Navigation("CompoundBow");
 
@@ -664,21 +582,19 @@ namespace ArcheryMAS.Migrations
                     b.Navigation("People");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Coach", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Coach", b =>
                 {
                     b.Navigation("Training");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Competition", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Competition", b =>
                 {
                     b.Navigation("ArcherInCompetitions");
                 });
 
-            modelBuilder.Entity("ArcheryMAS.Entities.Person", b =>
+            modelBuilder.Entity("ArcheryMAS.Migrations.Person", b =>
                 {
                     b.Navigation("Archer");
-
-                    b.Navigation("ArrowSets");
 
                     b.Navigation("Coach");
 

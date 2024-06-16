@@ -4,29 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace ArcheryMAS.Entities;
+namespace ArcheryMAS.Migrations;
 
 [Table("ArrowSetOutdoor")]
 public partial class ArrowSetOutdoor
 {
-    public string Material { get; set; } = "Carbon";
-
-    [Column(TypeName = "double")] public static double MaxDiameter { get; set; } = 4;
+    public string Material { get; set; } = null!;
 
     [Column(TypeName = "double")]
-    public double Diameter
-    {
-        get => Diameter;
-        set
-        {
-            if (value >= MaxDiameter)
-            {
-                throw new ArgumentOutOfRangeException("Diameter is too big");
-            }
-        }
-    }
+    public double MaxDiameter { get; set; }
 
-    [Key] public int ArrowSet_ID { get; set; }
+    [Column(TypeName = "double")]
+    public double Diameter { get; set; }
+
+    [Key]
+    public int ArrowSet_ID { get; set; }
 
     [ForeignKey("ArrowSet_ID")]
     [InverseProperty("ArrowSetOutdoor")]

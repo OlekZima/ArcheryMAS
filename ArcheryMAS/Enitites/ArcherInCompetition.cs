@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace ArcheryMAS.Entities;
+namespace ArcheryMAS.Migrations;
 
 [PrimaryKey("Archer_Person_PESEL", "Competition_Name")]
 [Table("ArcherInCompetition")]
@@ -16,9 +16,11 @@ public partial class ArcherInCompetition
 
     public string Prize { get; set; } = null!;
 
-    [Key] public string Archer_Person_PESEL { get; set; } = null!;
+    [Key]
+    public string Archer_Person_PESEL { get; set; } = null!;
 
-    [Key] public string Competition_Name { get; set; } = null!;
+    [Key]
+    public string Competition_Name { get; set; } = null!;
 
     [ForeignKey("Archer_Person_PESEL")]
     [InverseProperty("ArcherInCompetitions")]
