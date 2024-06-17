@@ -1,27 +1,26 @@
 @page "/AddArcherssCompitions"
 @using ArcheryMAS.Context
 @using ArcheryMAS.Enitites
+@using ArcheryMAS.Enitites
 @using ArcheryMAS.Service
 @using ArcheryMAS.ViewModels
-@using Person = Bogus.Person
+@using Microsoft.IdentityModel.Tokens
 @rendermode InteractiveServer
-
 @inject NavigationManager NavigationManager
 @inject ArcherService ArcherService
 @inject CompetitionService CompetitionService
 @inject ArcheryDbContext DbContext
+@inject PersonService PersonService
 
 <h2>Wyszukaj Zawodnika</h2>
 <div class="row">
     <div class="search-section col">
         <label for="name">Imiona:</label>
-        <input @bind="searchCriteria.Names" id="name" type="text" placeholder="Imiona (przez przycinki)">
+        <input @bind="searchCriteria.Names" id="name" type="text" placeholder="Imiona (przez przecinki)">
         <label for="surname">Nazwisko:</label>
         <input @bind="searchCriteria.Surname" id="surname" type="text" placeholder="Nazwisko">
         <label for="pesel">PESEL:</label>
         <input @bind="searchCriteria.PESEL" id="pesel" type="text" placeholder="Pesel">
-        <label for="coach">Trener:</label>
-        <input @bind="searchCriteria.Coach" id="coach" type="text" placeholder="Trener">
         <label for="competition">Zawody:</label>
         <select @onchange="OnCompetitionChanged">
             @foreach (var competition in _competitions)
@@ -29,7 +28,7 @@
                 <option value="@competition.Name">@competition.Name</option>
             }
         </select>
-        <button @onclick="GetArchersByName">Szukaj</button>
+        <button @onclick="Search">Szukaj</button>
         <button onclick="location.href='/'">Wróć do menu</button>
     </div>
     <div class="table-section col">
@@ -41,21 +40,25 @@
                 <th>Nazwisko</th>
                 <th>Ranga</th>
                 <th>PESEL</th>
-                <th>Trener</th>
             </tr>
             </thead>
             <tbody>
-            @foreach (var archer in _searchResults)
+            @foreach (var archer in _searchResultsViewModels)
             {
+                @if (archer.Archer == null)
+                {
+                    continue;
+                }
+
+                Console.WriteLine(_searchResultsViewModels.Count);
                 <tr>
                     <td>
-                        <input type="checkbox" @bind="archer.IsSelected"/>
+                        <input type="checkbox" @onclick="() => ToggleSelection(archer)" checked="@archer.IsSelected" />
                     </td>
-                    <td>@archer.Archer.Person_PESELNavigation.Names</td>
-                    <td>@archer.Archer.Person_PESELNavigation.Surname</td>
-                    <td>@archer.Archer.Rank</td>
-                    <td>@archer.Archer.Person_PESELNavigation.PESEL</td>
-                    <td>@archer.Archer.Person_PESELNavigation.Coach?.Person_PESELNavigation.FullName</td>
+                    <td>@archer.Person.Names</td>
+                    <td>@archer.Person.Surname</td>
+                    <td>@archer.Archer?.Rank</td>
+                    <td>@archer.Person.PESEL</td>
                 </tr>
             }
             </tbody>
@@ -64,13 +67,17 @@
     </div>
 </div>
 
-
 @code {
     private List<Competition> _competitions = new List<Competition>();
-    private List<ArcherViewModel> _searchResults = new List<ArcherViewModel>();
+    private List<Person> _searchResults = new List<Person>();
+    private HashSet<string> _selectedPESELs = new HashSet<string>();
+
     private SearchCriteria searchCriteria = new SearchCriteria();
     private Competition selectedCompetition = new Competition();
     private string? selectedCompetitionId;
+    private List<ArcherPersonViewModel> _selectedArchers = new List<ArcherPersonViewModel>();
+
+    private List<ArcherPersonViewModel> _searchResultsViewModels = new List<ArcherPersonViewModel>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,10 +85,58 @@
     }
 
 
+    private void ToggleSelection(ArcherPersonViewModel archerVM)
+    {
+        archerVM.IsSelected = !archerVM.IsSelected;
+    }
+
+
     private void AcceptSelection()
     {
-        var selectedArchers = _searchResults.Where(a => a.IsSelected).Select(vm => vm.Archer).ToList();
-        Console.WriteLine($"{selectedArchers.Count} archers selected.");
+        Console.WriteLine($"{_selectedArchers.Count} archers selected.");
+        Console.WriteLine($"{_selectedPESELs.Count} PESELs selected.");
+        foreach (var archer in _selectedArchers)
+        {
+            Console.WriteLine($"Selected Archer: {archer.Person.Names} {archer.Person.Surname}");
+        }
+
+        foreach (var xPeseL in _selectedPESELs)
+        {
+            Console.WriteLine($"Selected PESEL: {xPeseL}");
+        }
+    }
+
+    private void InitializeViewModels()
+    {
+        _searchResultsViewModels = _searchResults.Select(p =>
+        {
+            var viewModel = new ArcherPersonViewModel
+            {
+                Person = p,
+                Archer = p.Archer,
+                IsSelected = _selectedPESELs.Contains(p.PESEL)
+            };
+
+            viewModel.OnSelectionChanged = () => UpdateSelectedArchers(viewModel);
+            return viewModel;
+        }).ToList();
+    }
+
+    private void UpdateSelectedArchers(ArcherPersonViewModel viewModel)
+    {
+        if (viewModel.IsSelected)
+        {
+            if (_selectedArchers.All(a => a.Person.PESEL != viewModel.Person.PESEL))
+            {
+                _selectedArchers.Add(viewModel);
+                _selectedPESELs.Add(viewModel.Person.PESEL);
+            }
+        }
+        else
+        {
+            _selectedArchers.RemoveAll(a => a.Person.PESEL == viewModel.Person.PESEL);
+            _selectedPESELs.Remove(viewModel.Person.PESEL);
+        }
     }
 
     private Task OnCompetitionChanged(ChangeEventArgs e)
@@ -92,14 +147,35 @@
         return Task.CompletedTask;
     }
 
+    private void UpdateSelectedPESELs(string pesel)
+    {
+        if (_selectedPESELs.Contains(pesel))
+        {
+            _selectedPESELs.Remove(pesel);
+        }
+        else
+        {
+            _selectedPESELs.Add(pesel);
+        }
+    }
+
+    private async Task Search()
+    {
+        if (DbContext != null)
+        {
+            _searchResults = await PersonService.GetPeopleArchersAsync(searchCriteria);
+            InitializeViewModels();
+            StateHasChanged();
+        }
+    }
+
+
     public class SearchCriteria
     {
         public string Names { get; set; }
         public string Surname { get; set; }
         public string PESEL { get; set; }
-        public string Coach { get; set; }
     }
-
 
 }
 
