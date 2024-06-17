@@ -1,6 +1,208 @@
 @page "/EditBowCompoundData"
-<h3>EditBowCompoundData</h3>
+@using ArcheryMAS.Context
+@using ArcheryMAS.Enitites
+@using ArcheryMAS.Migrations
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+@inject ArcheryMAS.Service.BowService BowService
+@inject ArcheryDbContext ArcheryDbContext
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    table {
+        width: 80%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: rgb(89, 117, 55);
+
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .button {
+        background-color: rgb(89, 117, 55);
+        border-radius: 10px;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px 2px;
+        cursor: pointer;
+    }
+
+    .modal {
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(89, 117, 55, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: #f4f4f4;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%;
+        border-radius: 10px;
+    }
+</style>
+
+<h2>Edytuj łuki bloczkowe</h2>
+<div class="table-section col">
+    <table>
+        <thead>
+        <tr>
+            <th>Nick Name</th>
+            <th>Manufacturer</th>
+            <th>Force</th>
+            <th>Optical Zoom</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var bow in olympicBows)
+        {
+            <tr>
+                <td>@bow.Bow_NickNameNavigation.NickName</td>
+                <td>@bow.Bow_NickNameNavigation.Manufacturer</td>
+                <td>@Math.Round(bow.Bow_NickNameNavigation.Force, 2)</td>
+                <td>@bow.OpticalZoom</td>
+                <td>
+                    <button @onclick="() => EditBow(bow)">edit</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <button class="button" onclick="location.href='/'">Wróć</button>
+</div>
+
+@if (isSelected)
+{
+    <div class="modal">
+        <div class="modal-content">
+            @if (isErrorMessage)
+            {
+                <p style="color: red;">@errorMessage</p>
+            }
+            <h2>Edytuj łuk: @_selectedBow.Bow_NickNameNavigation.NickName</h2>
+            <label>Nick Name:</label>
+            <input @bind="_selectedBow.Bow_NickNameNavigation.NickName"/>
+
+            <label>Manufacturer:</label>
+            <input @bind="_selectedBow.Bow_NickNameNavigation.Manufacturer"/>
+
+            <label>Force:</label>
+            <input type="number" @bind="_selectedBow.Bow_NickNameNavigation.Force"/>
+
+            <label>Optical Zoom:</label>
+            <input type="number" @bind="_selectedBow.OpticalZoom"/>
+
+            <button @onclick="ConfirmEdit">Potwierdź</button>
+            <button @onclick="CancelEdit">Anuluj</button>
+        </div>
+    </div>
+}
+
 
 @code {
+
+    /// <summary>
+    /// Zmienna przechowująca komunikat błędu
+    /// </summary>
+    private string errorMessage = "";
+
+    /// <summary>
+    /// Zmienna przechowująca informację czy wyświetlić komunikat błędu 
+    /// </summary>
+    private bool isErrorMessage = false;
+
+    /// <summary>
+    /// Zmienna przechowująca wybrany łuk bloczkowy
+    /// </summary>
+    private CompoundBow _selectedBow = null;
+
+    /// <summary>
+    /// Zmienna przechowująca informację czy łuk jest wybrany
+    /// </summary>
+    private bool isSelected = false;
+
+    /// <summary>
+    /// Lista łuków bloczkowych
+    /// </summary>
+    private List<CompoundBow> olympicBows;
+
+    /// <summary>
+    /// Metoda pobierająca łuki bloczkowe
+    /// </summary>
+    protected override async Task OnInitializedAsync()
+    {
+        olympicBows = await BowService.GetCompoundBowsAsync();
+    }
+
+    /// <summary>
+    /// Metoda, która pozwala na wyświetlenie formularza edycji łuku
+    /// </summary>
+    private async Task EditBow(CompoundBow bow)
+    {
+        _selectedBow = bow;
+        isSelected = true;
+    }
+
+    /// <summary>
+    /// Metoda, która pozwala na potwierdzenie edycji łuku
+    /// </summary>
+    private void ConfirmEdit()
+    {
+        if (_selectedBow.OpticalZoom is < 0 or > 2.4)
+        {
+            errorMessage = "Optical zoom must be between 0 and 2.4";
+            isErrorMessage = true;
+            return;
+        }
+
+        BowService.UpdateCompoundBowAsync(_selectedBow);
+        _selectedBow = null;
+        isSelected = false;
+        isErrorMessage = false;
+    }
+
+    /// <summary>
+    /// Metoda, która pozwala na anulowanie edycji łuku
+    /// </summary>
+    private void CancelEdit()
+    {
+        _selectedBow = null;
+        isSelected = false;
+        isErrorMessage = false;
+    }
 
 }

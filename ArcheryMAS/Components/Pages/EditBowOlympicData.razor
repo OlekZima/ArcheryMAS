@@ -58,15 +58,19 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(89, 117, 55, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
+        background-color: #f4f4f4;
+        margin: auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 50%;
+        width: 90%;
+        border-radius: 10px;
     }
 </style>
 
@@ -102,47 +106,68 @@
     <button class="button" onclick="location.href='/'">Wróć</button>
 </div>
 
-@if (_selectedBow != null)
+@if (isSelected)
 {
-    <div class="modal">
-        <div class="modal-content">
-            
-            <h2>Edytuj łuk: @_selectedBow.Bow_NickNameNavigation.NickName</h2>
-            <label>Nick Name:</label>
-            <input @bind="_selectedBow.Bow_NickNameNavigation.NickName"/>
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
-            <label>Manufacturer:</label>
-            <input @bind="_selectedBow.Bow_NickNameNavigation.Manufacturer"/>
+                <h2>Edytuj łuk: @_selectedBow.Bow_NickNameNavigation.NickName</h2>
+                <label>Nick Name:</label>
+                <input @bind="_selectedBow.Bow_NickNameNavigation.NickName"/>
 
-            <label>Force:</label>
-            <input type="number" @bind="_selectedBow.Bow_NickNameNavigation.Force"/>
+                <label>Manufacturer:</label>
+                <input @bind="_selectedBow.Bow_NickNameNavigation.Manufacturer"/>
 
-            <label>Number Of Stabilizers:</label>
-            <input type="number" @bind="_selectedBow.NummberOfStabilizers"/>
+                <label>Force:</label>
+                <input type="number" @bind="_selectedBow.Bow_NickNameNavigation.Force"/>
 
-            <label>Days Without Service:</label>
-            <input type="number" @bind="_selectedBow.DaysWithoutService"/>
+                <label>Number Of Stabilizers:</label>
+                <input type="number" @bind="_selectedBow.NummberOfStabilizers"/>
 
-            <button @onclick="ConfirmEdit">Potwierdź</button>
-            <button @onclick="CancelEdit">Anuluj</button>
+                <label>Days Without Service:</label>
+                <input type="number" @bind="_selectedBow.DaysWithoutService"/>
+
+                <button class="button" @onclick="ConfirmEdit">Potwierdź</button>
+                <button class="button" @onclick="CancelEdit">Anuluj</button>
+            </div>
         </div>
     </div>
 }
 
 
 @code {
+
+    /// <summary>
+    /// Łuk wybrany do edycji
+    /// </summary>
     private OlympicBow _selectedBow = null;
 
+    /// <summary>
+    /// Zmienna, przez którą sprawdzamy czy łuk jest wybrany
+    /// </summary>
+    private bool isSelected = false;
+
+    /// <summary>
+    /// Lista łuków olimpijskich 
+    /// </summary>
     private List<OlympicBow> olympicBows;
 
+    /// <summary>
+    /// Metoda, która pobiera łuki olimpijskie z bazy danych
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         olympicBows = await BowService.GetOlympicBowsAsync();
+        StateHasChanged();
     }
 
-    private async Task EditBow(OlympicBow bow)
+    private void EditBow(OlympicBow bow)
     {
-        _selectedBow = await BowService.GetOlympicBowByNickNameAsync(bow.Bow_NickName);
+        Console.WriteLine("Edit bow");
+        _selectedBow = bow;
+        isSelected = true;
+        StateHasChanged();
     }
 
 
@@ -150,11 +175,15 @@
     {
         BowService.UpdateOlympicBowAsync(_selectedBow);
         _selectedBow = null;
+        isSelected = false;
+        StateHasChanged();
     }
 
     private void CancelEdit()
     {
         _selectedBow = null;
+        isSelected = false;
+        StateHasChanged();
     }
 
 }

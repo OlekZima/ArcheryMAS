@@ -6,15 +6,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ArcheryMAS.Service;
 
+/// <summary>
+/// Person service class.
+/// </summary>
 public class PersonService
 {
+    /// <summary>
+    /// ArcheryDbContext field to have access to the database.
+    /// </summary>
     private readonly ArcheryDbContext _dbContext;
 
+    /// <summary>
+    /// Constructor of the PersonService class.
+    /// </summary>
+    /// <param name="dbContext"></param>
     public PersonService(ArcheryDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
+    /// <summary>
+    /// Add person to the database if it is not null.
+    /// </summary>
+    /// <param name="person"></param>
     public async Task AddPersonAsync(Person? person)
     {
         if (person != null) _dbContext.People.Add(person);
@@ -22,6 +36,10 @@ public class PersonService
     }
 
 
+    /// <summary>
+    /// Get people that are Archers from the database.
+    /// </summary>
+    /// <returns></returns>
     public async Task<List<Person>> GetPeopleArchersAsync()
     {
         return await _dbContext.People
@@ -30,6 +48,12 @@ public class PersonService
             .ToListAsync();
     }
 
+    /// <summary>
+    /// Get people that are Archers from the database with search criteria.
+    /// </summary>
+    /// <param name="searchCriteria"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public async Task<List<Person>> GetPeopleArchersAsync(AddArcherssCompitions.SearchCriteria searchCriteria)
     {
         if (_dbContext == null)

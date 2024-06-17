@@ -6,15 +6,31 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace ArcheryMAS.Service;
 
+/// <summary>
+/// Archer service class.
+/// </summary>
 public class ArcherService
 {
+    /// <summary>
+    /// ArcheryDbContext field to have access to the database.
+    /// </summary>
     private readonly ArcheryDbContext _dbContext;
 
+    /// <summary>
+    /// Constructor of the ArcherService class.
+    /// </summary>
+    /// <param name="dbContext"></param>
     public ArcherService(ArcheryDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
+    /// <summary>
+    /// Search archers from the database with search criteria.
+    /// </summary>
+    /// <param name="searchCriteria"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
     public async Task<List<Archer>> SearchArchersAsync(AddArcherssCompitions.SearchCriteria searchCriteria)
     {
         if (_dbContext == null)

@@ -9,11 +9,30 @@
 @rendermode InteractiveServer
 
 @code {
+
+    /// <summary>
+    /// Zawody, które są tworzone.
+    /// </summary>
     public Competition competition = new();
+
+    /// <summary>
+    /// Zmienna, która określa czy wyświetlić komunikat o błędzie. 
+    /// </summary>
     private bool showErrorMessage = true;
+
+    /// <summary>
+    /// Komunikat o błędzie. 
+    /// </summary>
     private string errorMessage = "Data zawodów musi być większa niż dzisiejsza data.";
+
+    /// <summary>
+    /// Dzisiejsza data.
+    /// </summary>
     public DateTime datenow = DateTime.Now.Date;
 
+    /// <summary>
+    /// Metoda, która sprawdza czy dane zawody są poprawne.
+    /// </summary>
     private async Task HandleValidSubmit()
     {
         if (showErrorMessage)
@@ -48,6 +67,9 @@
         }
     }
 
+    /// <summary>
+    /// Metoda, która przenosi użytkownika do poprzedniej strony.
+    /// </summary>
     private void GoBack()
     {
         NavigationManager.NavigateTo("/");

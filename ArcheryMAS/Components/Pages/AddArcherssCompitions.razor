@@ -72,29 +72,68 @@
 </div>
 
 @code {
+
+    /// <summary>
+    /// Lista zawodów
+    /// </summary>
     private List<Competition> _competitions = [];
+
+    /// <summary>
+    /// Wyniki wyszukiwania
+    /// </summary>
     private List<Person> _searchResults = [];
+
+    /// <summary>
+    /// Zaznaczeni zawodnicy
+    /// </summary>
     private HashSet<string> _selectedPESELs = [];
 
+    /// <summary>
+    /// Kryteria wyszukiwania
+    /// </summary>
     private SearchCriteria searchCriteria = new();
+
+    /// <summary>
+    /// Wybrane zawody
+    /// </summary>
     private Competition selectedCompetition = new();
+
+    /// <summary>
+    /// Nazwa wybranych zawodów
+    /// </summary>
     private string? selectedCompetitionName;
+
+    /// <summary>
+    /// Wybrani zawodnicy
+    /// </summary>
     private List<ArcherPersonViewModel> _selectedArchers = new List<ArcherPersonViewModel>();
 
+    /// <summary>
+    /// Wyniki wyszukiwania w postaci ArcherPersonViewModel
+    /// </summary>
     private List<ArcherPersonViewModel> _searchResultsViewModels = new List<ArcherPersonViewModel>();
 
+    /// <summary>
+    /// Inicjalizacja komponentu. Pobranie listy zawodów z bazy danych i zapisanie ich w polu _competitions.
+    /// </summary>
     protected override async Task OnInitializedAsync()
     {
         _competitions = await CompetitionService.GetAllCompetitionsAsync();
     }
 
-
+    /// <summary>
+    /// Przełączenie zaznaczenia zawodnika
+    /// </summary>
     private static void ToggleSelection(ArcherPersonViewModel archerVM)
     {
         archerVM.IsSelected = !archerVM.IsSelected;
     }
 
 
+    /// <summary>
+    /// Akceptacja wyboru zawodników i zapisanie ich do bazy danych, jeżeli są zaznaczeni.
+    /// Przejście do kolejnego widoku.
+    /// </summary>
     private void AcceptSelection()
     {
         if (selectedCompetition == null)
@@ -143,6 +182,9 @@
         NavigationManager.NavigateTo("/addcompetition/endArchers");
     }
 
+    /// <summary>
+    /// Inicjalizacja widoków dla wyników wyszukiwania. Wypełnienie tabeli zawodnikami.
+    /// </summary>
     private void InitializeViewModels()
     {
         _searchResultsViewModels = _searchResults.Select(p =>
@@ -159,6 +201,9 @@
         }).ToList();
     }
 
+    /// <summary>
+    /// Aktualizacja listy zaznaczonych zawodników
+    /// </summary>
     private void UpdateSelectedArchers(ArcherPersonViewModel viewModel)
     {
         if (viewModel.IsSelected)
@@ -176,6 +221,9 @@
         }
     }
 
+    /// <summary>
+    /// Obsługa zmiany wybranych zawodów
+    /// </summary>
     private Task OnCompetitionChanged(ChangeEventArgs e)
     {
         selectedCompetitionName = e.Value?.ToString();
@@ -193,6 +241,9 @@
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// Wyszukiwanie zawodników na podstawie kryteriów.
+    /// </summary>
     private async Task Search()
     {
         if (DbContext != null)
@@ -203,11 +254,24 @@
         }
     }
 
-
+    /// <summary>
+    /// Klasa pomocnicza do przechowywania kryteriów wyszukiwania. 
+    /// </summary>
     public class SearchCriteria
     {
+        /// <summary>
+        /// Imiona zawodnika 
+        /// </summary>
         public string Names { get; set; }
+
+        /// <summary>
+        /// Nazwisko zawodnika 
+        /// </summary>
         public string Surname { get; set; }
+
+        /// <summary>
+        /// PESEL zawodnika 
+        /// </summary>
         public string PESEL { get; set; }
     }
 

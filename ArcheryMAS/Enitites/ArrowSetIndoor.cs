@@ -10,9 +10,11 @@ namespace ArcheryMAS.Migrations;
 [Table("ArrowSetIndoor")]
 public partial class ArrowSetIndoor
 {
-    [Column(TypeName = "double")] public double MaxDiameter { get; set; }
+    [Column(TypeName = "double")]
+    public double MaxDiameter { get; set; }
 
-    [Column(TypeName = "double")] public double Diameter { get; set; }
+    [Column(TypeName = "double")]
+    public double Diameter { get; set; }
 
     [Key] public int ArrowSet_ID { get; set; }
 

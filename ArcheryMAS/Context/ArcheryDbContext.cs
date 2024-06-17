@@ -150,6 +150,10 @@ public partial class ArcheryDbContext : DbContext
         SeedData(modelBuilder);
     }
 
+    /// <summary>
+    /// Method to seed the database with some Fake data create by Bogus.
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     private void SeedData(ModelBuilder modelBuilder)
     {
         var numOfData = 10;
