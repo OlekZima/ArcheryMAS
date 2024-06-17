@@ -29,4 +29,8 @@
     <ItemGroup>
         <_ContentIncludedByDefault Remove="Components\Layout\Pages\Index.razor"/>
     </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="Components\Pages\AddCompetitionEndArchers.razor"/>
+    </ItemGroup>
 </Project>

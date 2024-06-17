@@ -8,6 +8,10 @@ builder.Services.AddScoped<PresidentService>();
 builder.Services.AddScoped<PersonService>();
 builder.Services.AddScoped<CompetitionService>();
 builder.Services.AddScoped<ArcherService>();
+builder.Services.AddScoped<ArcherInCompetitionService>();
+builder.Services.AddScoped<BowService>();
+builder.Services.AddScoped<OlympicBowService>();
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -15,7 +19,6 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddDbContext<ArcheryDbContext>(options =>
     options.UseSqlite("Data Source=ArcherDb.sqlite"));
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

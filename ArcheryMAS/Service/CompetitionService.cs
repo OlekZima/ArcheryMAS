@@ -25,9 +25,12 @@ public class CompetitionService
             throw new ArgumentException("Description cannot exceed 200 characters.");
         }
 
+        Console.WriteLine("Adding competition");
 
         await _dbContext.Competitions.AddAsync(competition);
         await _dbContext.SaveChangesAsync();
+
+        Console.WriteLine("Competition added");
     }
 
     public async Task<List<Competition>> GetAllCompetitionsAsync()

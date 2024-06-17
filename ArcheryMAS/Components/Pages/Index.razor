@@ -42,11 +42,11 @@
     .button {
         padding: 10px 20px;
         background-color: rgb(89, 117, 55);
+        border-radius: 10px;
         color: white;
         border: none;
         cursor: pointer;
         transition: background-color 0.3s;
-        border-radius: 10px;
     }
 
     .button:hover {
@@ -100,9 +100,10 @@
 
     <div class="buttons">
         <button class="button" onclick="location.href='/addcompetition1'">Dodaj zawody</button>
-        <button class="button" onclick="location.href='/AddArcherssCompitions'">Dodaj zawodników</button>
+        <button class="button" onclick="location.href='/AddArcherssCompitions'">Dodaj zawodników do zawodów</button>
         <button class="button">Edytuj zawodnika</button>
-        <button class="button">Edytuj sprzęt</button>
+        <button class="button" onclick="location.href='/EditBowOlympicData'">Edytuj sprzęt olimpisjki</button>
+        <button class="button" onclick="location.href='/EditBowCompoundData'">Edytuj sprzęt bloczkowy</button>
     </div>
 </div>
 

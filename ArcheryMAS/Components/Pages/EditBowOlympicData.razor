@@ -1,0 +1,160 @@
+@page "/EditBowOlympicData"
+@using ArcheryMAS.Context
+@using ArcheryMAS.Enitites
+@using Microsoft.EntityFrameworkCore
+@rendermode InteractiveServer
+
+@inject ArcheryMAS.Service.BowService BowService
+@inject ArcheryDbContext ArcheryDbContext
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    table {
+        width: 80%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+    }
+    th {
+        background-color: rgb(89, 117, 55);
+
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    .button {
+        background-color: rgb(89, 117, 55);
+        border-radius: 10px;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px 2px;
+        cursor: pointer;
+    }
+
+    .modal {
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+    }
+</style>
+
+<h2>Edytuj łuki olimpijskie</h2>
+<div class="table-section col">
+    <table>
+        <thead>
+        <tr>
+            <th>Nick Name</th>
+            <th>Manufacturer</th>
+            <th>Force</th>
+            <th>Number Of Stabilizers</th>
+            <th>Days Without Service</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var bow in olympicBows)
+        {
+            <tr>
+                <td>@bow.Bow_NickNameNavigation.NickName</td>
+                <td>@bow.Bow_NickNameNavigation.Manufacturer</td>
+                <td>@Math.Round(bow.Bow_NickNameNavigation.Force, 2)</td>
+                <td>@bow.NummberOfStabilizers</td>
+                <td>@bow.DaysWithoutService</td>
+                <td>
+                    <button @onclick="() => EditBow(bow)">edit</button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <button class="button" onclick="location.href='/'">Wróć</button>
+</div>
+
+@if (_selectedBow != null)
+{
+    <div class="modal">
+        <div class="modal-content">
+            
+            <h2>Edytuj łuk: @_selectedBow.Bow_NickNameNavigation.NickName</h2>
+            <label>Nick Name:</label>
+            <input @bind="_selectedBow.Bow_NickNameNavigation.NickName"/>
+
+            <label>Manufacturer:</label>
+            <input @bind="_selectedBow.Bow_NickNameNavigation.Manufacturer"/>
+
+            <label>Force:</label>
+            <input type="number" @bind="_selectedBow.Bow_NickNameNavigation.Force"/>
+
+            <label>Number Of Stabilizers:</label>
+            <input type="number" @bind="_selectedBow.NummberOfStabilizers"/>
+
+            <label>Days Without Service:</label>
+            <input type="number" @bind="_selectedBow.DaysWithoutService"/>
+
+            <button @onclick="ConfirmEdit">Potwierdź</button>
+            <button @onclick="CancelEdit">Anuluj</button>
+        </div>
+    </div>
+}
+
+
+@code {
+    private OlympicBow _selectedBow = null;
+
+    private List<OlympicBow> olympicBows;
+
+    protected override async Task OnInitializedAsync()
+    {
+        olympicBows = await BowService.GetOlympicBowsAsync();
+    }
+
+    private async Task EditBow(OlympicBow bow)
+    {
+        _selectedBow = await BowService.GetOlympicBowByNickNameAsync(bow.Bow_NickName);
+    }
+
+
+    private void ConfirmEdit()
+    {
+        BowService.UpdateOlympicBowAsync(_selectedBow);
+        _selectedBow = null;
+    }
+
+    private void CancelEdit()
+    {
+        _selectedBow = null;
+    }
+
+}
